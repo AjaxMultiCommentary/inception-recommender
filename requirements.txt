@@ -1,5 +1,5 @@
 https://github.com/inception-project/inception-external-recommender/archive/refs/heads/master.zip
-flair>=0.12.0
+flair==0.13.0
 pyOpenSSL==23.3.0
 gunicorn==21.2.0
 boto3==1.28.75
