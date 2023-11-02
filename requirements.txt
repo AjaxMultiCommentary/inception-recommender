@@ -1,0 +1,4 @@
+https://github.com/inception-project/inception-external-recommender/archive/refs/heads/master.zip
+flair==0.13.0
+pyOpenSSL
+Gunicorn
