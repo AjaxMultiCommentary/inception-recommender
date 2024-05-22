@@ -12,6 +12,7 @@ PREDICTED_TYPE = "webanno.custom.AjMCNamedEntity"
 PREDICTED_FEATURE = "value"
 USER = "mromanello"
 PROJECT_ID = "test_project"
+PATH_HMBERT_AJMC_MULTILINGUAL_MODEL = "./models/bert-base-historic-multilingual-cased-bs4-wsFalse-e10-lr5e-05-layers-1-crfFalse-1/best-model.pt"
 
 setup_logging(level=logging.DEBUG)
 
@@ -19,7 +20,10 @@ setup_logging(level=logging.DEBUG)
 class ClassicsNERClassifier(Classifier):
     
     def __init__(self, language : str, tagset : str):
-        self._model = SequenceTagger.load("hmteams/flair-hipe-2022-ajmc-fr")
+        if tagset == 'fine':
+            self._model = SequenceTagger.load(PATH_HMBERT_AJMC_MULTILINGUAL_MODEL)
+        elif tagset == 'coarse':
+            self._model = SequenceTagger.load(f"hmteams/flair-hipe-2022-ajmc-{language}")
 
     def predict(self, cas: Cas, layer: str, feature: str, project_id: str, document_id: str, user_id: str):
         tokens_cas = list(cas.select(TOKEN_TYPE))
@@ -46,6 +50,7 @@ class ClassicsNERClassifier(Classifier):
                 begin = tokens_cas[start_idx].begin
                 end = tokens_cas[end_idx].end
                 prediction = create_prediction(cas, layer, feature, begin, end, ent.tag)
+                #prediction.set(f'{feature}_score', ent.score)
                 cas.add(prediction)
 
 def build_typesystem() -> TypeSystem:
@@ -66,7 +71,10 @@ def load_test_document() -> Cas:
     return cas
 
 server = Server()
-server.add_classifier("ajmc_ner_fr", ClassicsNERClassifier("fr", "coarse"))
+#server.add_classifier("ner_coarse_fr", ClassicsNERClassifier("fr", "coarse"))
+#server.add_classifier("ner_coarse_de", ClassicsNERClassifier("de", "coarse"))
+#server.add_classifier("ner_coarse_en", ClassicsNERClassifier("en", "coarse"))
+server.add_classifier("ner_fine_multiling", ClassicsNERClassifier(None, "fine"))
 app = server._app
 
 if __name__ == '__main__':
