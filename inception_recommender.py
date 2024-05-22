@@ -1,3 +1,4 @@
+import os
 import logging
 from flair.data import Sentence, Token
 from flair.models import SequenceTagger
@@ -13,6 +14,8 @@ PREDICTED_FEATURE = "value"
 USER = "mromanello"
 PROJECT_ID = "test_project"
 PATH_HMBERT_AJMC_MULTILINGUAL_MODEL = "./models/bert-base-historic-multilingual-cased-bs4-wsFalse-e10-lr5e-05-layers-1-crfFalse-1/best-model.pt"
+HOST = os.getenv('HOST', '0.0.0.0')
+PORT = os.getenv('PORT', 5000)
 
 setup_logging(level=logging.DEBUG)
 
@@ -78,4 +81,4 @@ server.add_classifier("ner_fine_multiling", ClassicsNERClassifier(None, "fine"))
 app = server._app
 
 if __name__ == '__main__':
-    server.start(debug=True)
+    server.start(host=HOST, port=PORT, debug=True)
