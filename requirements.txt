@@ -1,4 +1,5 @@
 https://github.com/inception-project/inception-external-recommender/archive/refs/heads/master.zip
+scipy==1.12
 flair==0.13.0
 pyOpenSSL==23.3.0
 gunicorn==21.2.0
