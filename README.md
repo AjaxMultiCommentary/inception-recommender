@@ -18,8 +18,6 @@ And the Docker command
 docker run -e JAVA_OPTS="-Dlogging.level.httpclient.wire.header=debug" -p 8080:8080 -p 5001:5000 ghcr.io/inception-project/inception:29.7
 ```
 
-## TODOs
+# Acknowledgements
 
-- ✅ make it possible to select a different model for diff. languages supported
-- ✅ support fine-grained in addition to coarse
-- add the hmbert fine-grained model to git via lfs
+Code in this repository was produced in the context of the Ajax Multi-Commentary project, funded by the Swiss National Science Foundation under an Ambizione grant [PZ00P1\_186033](http://p3.snf.ch/project-186033).
